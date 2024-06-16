@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruoyi.web.applicantion.mapper.ArticleMapper">
+
+    <insert id="upload" parameterType="com.ruoyi.web.applicantion.service.dto.ArticleDto">
+        insert into article(id, Title, Author, Content, PublishDate, url) values(#{id},#{Title},#{Author},#{Content},#{PublishDate},#{url})
+    </insert>
+
+    <select id="getById" resultType="com.ruoyi.web.applicantion.service.dto.ArticleDto">
+        select Title,Author,Content,PublishDate,url from article where id=#{id}
+    </select>
+
+    <select id="getAll" resultType="com.ruoyi.web.applicantion.service.dto.ArticleDto">
+        select * from article ORDER BY DATE(PublishDate) DESC
+    </select>
+
+    <delete id="deleteById">
+        delete from article where id=#{id}
+    </delete>
+
+    <update id="update" parameterType="com.ruoyi.web.applicantion.service.dto.ArticleDto">
+        update article
+        <set>
+            <if test="Title!='' and Title!=null">Title=#{Title},</if>
+            <if test="Author!='' and Author!=null">Author=#{Author},</if>
+            <if test="Content!='' and Content!=null">Content=#{Content},</if>
+            <if test="PublishDate!=null">PublishDate=#{PublishDate},</if>
+            <if test="url!='' and url!=null">url=#{url},</if>
+        </set>
+        where id=#{id}
+    </update>
+</mapper>
